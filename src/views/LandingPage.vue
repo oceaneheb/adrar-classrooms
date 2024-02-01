@@ -1,6 +1,6 @@
 <template>
     <div class="container px-4">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col-md-5 col-lg-4">
           <div class="bloc">
             <h3>Vous êtes stagiaire ?</h3>

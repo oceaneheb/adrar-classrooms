@@ -47,19 +47,28 @@
     </aside>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script>
+// import { ref } from 'vue'
 
-    const is_expanded = ref(false)
+export default {
+    name: 'sidebar',
 
-    const ToggleMenu = () => {
-        is_expanded.value = !is_expanded.value
+    data() {
+        return {
+            is_expanded: false,
+        }
+    },
+    methods: {
+        ToggleMenu() {
+            this.is_expanded = !this.is_expanded
+        }
     }
+}
+    
 </script>
 
 <style Lang="scss" scoped>
     aside {
-        /* position: absolute; */
         display: flex;
         flex-direction: column;
         width: calc(2rem + 2rem);

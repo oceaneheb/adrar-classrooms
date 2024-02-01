@@ -1,25 +1,30 @@
 <template>
-    <div>
-        <div class="container bg-success">
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <div class="login card-panel bg-primary white-text center">
-                        <h3>Connexion Stagiaire</h3>
-                        <form v-on:submit.prevent="signIn">
-                            <div class="input-field">
-                                <i class="material-icons prefix">email</i>
-                                <input type="text" id="email" v-model="email">
-                                <label for="email">Email</label>
-                            </div>
-                            <div class="input-field">
-                                <i class="material-icons prefix">lock</i>
-                                <input type="text" id="password" v-model="password">
-                                <label for="password">Mot de passe</label>
-                            </div>
-                            <button class="btn btn-large grey lighten-4 black-text">Valider</button>
-                        </form>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-6">
+                <img src="../../src/assets/img-connexion-stagiaire.png" alt=""> 
+            </div>
+            <div class="col-4 offset-1">
+                <!-- <div class="return">
+                    <span class="material-icons">arrow_back</span> -->
+                <router-link to="/" class="return">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Retour</span>
+                </router-link>
+                <!-- </div> -->
+                <h3>Connexion Stagiaire</h3>
+                <form v-on:submit.prevent="signIn">
+                    <div class="input-field">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" placeholder="Votre nom utilisateur" required v-model="email">
                     </div>
-                </div>
+                    <div class="input-field">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" placeholder="Votre mot de passe" required v-model="password">
+                        <p>J'ai oublié mon mot de passe</p>
+                    </div>
+                    <button type="submit">Valider</button>
+                </form>
             </div>
         </div>
     </div>
@@ -37,47 +42,71 @@ export default {
         };
     },
     methods: {
-    signIn() { // we also renamed this method
-    firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password) // THIS LINE CHANGED
-        .then((data) => {
-            console.log('Successfully logged in!');
-            this.$router.push('/dashboard') // redirect to the feed
-        })
-        .catch(error => {
-            console.log(error)
-            // switch (error.code) {
-            //     case 'auth/invalid-email':
-            //         errMsg.value = 'Invalid email'
-            //         break
-            //     case 'auth/user-not-found':
-            //         errMsg.value = 'No account with that email was found'
-            //         break
-            //     case 'auth/wrong-password':
-            //         errMsg.value = 'Incorrect password'
-            //         break
-            //     default:
-            //         errMsg.value = 'Email or password was incorrect'
-            //         break
-            // }
-        })
-}
-        // login: function(e) {
-        //     firebase
-        //         .auth()
-        //         .signInWithEmailAndPassword(this.email, this.password)
-        //         .then(
-        //             user => {
-        //                 alert(`Vous êtes connecté en tant que ${user.email}`);
-        //                 this.$router.push('/');
-        //             },
-        //             err => {
-        //                 alert(err.message);
-        //             }
-        //         );
-        //     e.preventDefault();
-        // }
+        signIn() {
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(this.email, this.password)
+            .then((user) => {
+                alert(`Vous êtes connecté en tant que ${user.email}`)
+                console.log('Successfully logged in!');
+                this.$router.push('/dashboard') // redirect to the dashboard
+            })
+            .catch(error => {
+                console.log(error)
+                alert(error.message)
+            })
+        }
     }
 }
 </script>
+
+<style scoped>
+
+    form {
+        margin-top: 2rem;
+
+        label {
+            color:rgba(101, 192, 237, 1);
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+        .input-field {
+            margin-bottom: 20px;
+        }
+    }
+
+    input::placeholder {
+        color: #828282;
+        opacity: 0.5;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: var(--primary);
+        color: #000000;
+        border-radius: 38px;
+        font-size: 18px;
+    }
+
+    p {
+        text-decoration: underline;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .return {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 2rem;
+        color: var(--dark);
+        text-decoration: none;
+    }
+</style>
